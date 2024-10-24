@@ -1,6 +1,8 @@
 package com.example.project2boot.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import org.springframework.lang.NonNull;
 
 
 @Entity
@@ -11,9 +13,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
+    @Size(min = 1, max = 20, message = "first_name должно содежать от 1 до 20 символов")
     @Column(name = "first_name")
     private String firstName;
 
+    @NonNull
+    @Size(min = 1, max = 20, message = "last_name должно содержать от 1 до 20 символов")
     @Column(name = "last_name")
     private String lastName;
 

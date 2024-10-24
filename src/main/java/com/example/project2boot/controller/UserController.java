@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Controller
 public class UserController {
-    @Autowired
+
+
     private final UserDao userDao;
 
     @Autowired

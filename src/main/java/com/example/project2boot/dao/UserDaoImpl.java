@@ -2,6 +2,7 @@ package com.example.project2boot.dao;
 
 import com.example.project2boot.model.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -31,14 +32,23 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) {
-        entityManager.persist(user);
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        try {
+            entityManager.merge(user);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("User with ID " + user.getId() + " not found for update");
+        }
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws EntityNotFoundException {
         User user = read(id);
         if (user != null) {
             entityManager.remove(user);
+        } else {
+            throw new EntityNotFoundException("User not found");
         }
     }
 
